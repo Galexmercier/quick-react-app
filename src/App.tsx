@@ -10,7 +10,7 @@ const App = () => {
       <header className="bg-[#282c34] min-h-screen flex flex-col items-center justify-center text-[calc(10px_+_2vmin)] text-white">
         <img src={reactLogo} className="h-[20vmin] pointer-events-none motion-safe:animate-logo-spin" alt="logo" />
         <img src={viteLogo} className="h-[20vmin] pointer-events-none motion-safe:animate-logo-spin" alt="logo" />
-        <p className="m-4">Hello React + Vite!</p>
+        <p className="m-4">CS Course Scheduler</p>
         <p>
           <button className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded " onClick={() => setCount(count => count + 1)}>
             count is: {count}
