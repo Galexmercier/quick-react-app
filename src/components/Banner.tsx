@@ -3,7 +3,7 @@ interface BannerProps {
 }
 
 const Banner = ({title}: BannerProps) => (
-    <h1 className="text-center">
+    <h1 className="items-center justify-center text-center p-5">
         {title}
     </h1>
 );

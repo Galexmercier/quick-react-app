@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* 
+Depending on screen width, course cards may need more than one row. 
+Each row should fill the available screen width. 
+Cards on the same row should appear uniform in height and internal spacing.
+Decision: four per row max, fitting to the screen width
+*/
+
+/*
+Tile Formatting (curved box):
+Header: [Term] CS [Number]
+[Title]
+Line
+[Meets]
+*/
+
 @theme {
   --animate-logo-spin: logo-spin infinite 20s linear;
 

@@ -39,7 +39,7 @@ const schedule = {
 
 const App = () => {
   return (
-    <div className="bg-[#282c34] min-h-screen flex flex-col items-center justify-center text-[calc(10px_+_2vmin)] text-white">
+    <div className="bg-[#282c34] min-h-screen flex flex-col text-[calc(10px_+_2vmin)] text-white p-4">
       <Banner title={schedule.title}/>
       <CourseList courses={schedule.courses}/>
     </div>

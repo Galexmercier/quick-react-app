@@ -1,3 +1,5 @@
+import CourseCard from "./CourseCard";
+
 type CourseEntry = {
     term: string,
     number: string,
@@ -10,10 +12,12 @@ interface CourseListProps {
 }
 
 const CourseList = ({courses}: CourseListProps) => (
-    <ul>
+    <ul className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-5 px-4">
     {
         Object.entries(courses).map(([id, courseInfo]) => (
-            <li key={id}>{courseInfo.term} CS {courseInfo.number}: {courseInfo.title}</li>
+            <li key={id}>
+                <CourseCard term={courseInfo.term} number={courseInfo.number} meets={courseInfo.meets} title={courseInfo.title}/>
+            </li>
         ))
     }
     </ul>
