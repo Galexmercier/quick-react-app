@@ -3,7 +3,7 @@
 // import viteLogo from '/vite.svg'
 import { useJsonQuery } from './utilities/fetch';
 import Banner from "./components/Banner";
-import CourseList from "./components/CourseList";
+import TermPage from "./components/TermPage";
 
 // Put Banner and CourseList components into their own files in src/components and import into App.tsx.
 // Pass the courses object to CourseList. 
@@ -32,7 +32,7 @@ const App = () => {
   return (
     <div className="bg-[#282c34] min-h-screen flex flex-col text-[calc(10px_+_2vmin)] text-white p-4">
       <Banner title={schedule.title}/>
-      <CourseList courses={schedule.courses}/>
+      <TermPage courses={schedule.courses}/>
     </div>
   )
 };
