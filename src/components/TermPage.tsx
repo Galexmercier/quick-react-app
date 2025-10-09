@@ -23,7 +23,7 @@ const TermPage = ({courses}: TermPageProps) => {
         course.meets,
         course.title
       ]).filter(course => term === course[1]);
-    
+
     return (
         <>
             <TermSelector term={term} setTerm={setTerm}/>
