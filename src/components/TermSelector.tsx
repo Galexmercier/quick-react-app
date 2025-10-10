@@ -22,7 +22,7 @@ interface TermSelector {
 }
 
 const TermSelector = ({term, setTerm}: TermSelector) => (
-  <div className="btn-group items-center justify-center text-center p-5">
+  <div className="flex items-center justify-center text-center">
   { 
     Object.values(terms)
       .map(value => <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />)

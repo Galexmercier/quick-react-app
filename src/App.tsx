@@ -9,6 +9,7 @@ import TermPage from "./components/TermPage";
 // Pass the courses object to CourseList. 
 
 interface course {
+  id: string,
   term: string,
   number: string,
   meets: string,
