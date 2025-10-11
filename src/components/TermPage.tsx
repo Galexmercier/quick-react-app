@@ -2,10 +2,9 @@ import TermSelector from "./TermSelector";
 import { useState } from 'react';
 import CourseSelector from "./CourseSelector";
 
-const toggleList = <T,>(x: T, lst: T[]): T[] => (
-  lst.includes(x) ? lst.filter(y => y !== x) : [...lst, x]
+const toggleList = <T extends {id: string}>(x: T, lst: T[]): T[] => (
+  lst.some(y => y.id === x.id) ? lst.filter(y => y.id !== x.id) : [...lst, x]
 );
-
 
 type CourseEntry = {
     id: string,
@@ -17,11 +16,12 @@ type CourseEntry = {
 
 interface TermPageProps {
     courses: Record<string, CourseEntry>;
+    selectedCourses: CourseEntry[];
+    setSelectedCourses: React.Dispatch<React.SetStateAction<CourseEntry[]>>;
 }
 
-const TermPage = ({courses}: TermPageProps) => {
+const TermPage = ({courses, selectedCourses, setSelectedCourses}: TermPageProps) => {
     const [term, setTerm] = useState('Fall');
-    const [menu, setMenu] = useState<CourseEntry[]>([]);
     
     
     const termCourses = Object.entries(courses).map(([key, course]) => [
@@ -33,7 +33,7 @@ const TermPage = ({courses}: TermPageProps) => {
       ]).filter(course => term === course[1]);
 
     const toggleMenu = (item: CourseEntry) => {
-        setMenu(menu => toggleList(item, menu));
+        setSelectedCourses(menu => toggleList(item, menu));
     };
 
     return (
@@ -47,7 +47,7 @@ const TermPage = ({courses}: TermPageProps) => {
                     meets,
                     title
                 }))}
-                menu={menu}
+                menu={selectedCourses}
                 toggleMenu={toggleMenu}
             />
         </>
