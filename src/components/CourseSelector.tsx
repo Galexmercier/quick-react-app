@@ -1,6 +1,7 @@
 import CourseCard from './CourseCard';
 import { useState } from 'react';
 import Modal from './Modal';
+import { hasConflict } from '../utilities/conflicts';
 
 interface Course {
   id: string,
@@ -36,6 +37,26 @@ interface CourseSelectorProps {
   toggleMenu: (item: Course) => void
 }
 
+const CreateCourseCard = (course: Course, selected: Course[], setSelected: (item: Course) => void) => {
+  const isSelected = selected.includes(course);
+  const isDisabled = !isSelected && hasConflict(course, selected);
+  let styles = "absolute bottom-5 right-5 z-10 border-2 border-white rounded-sm checked:bg-blue-500 checked:border-blue-500";
+
+  if (isDisabled) {
+    styles += " opacity-25"
+  }
+
+  return (
+    <div key={course.id} className="relative">
+      <CourseCard term={course.term} number={course.number} meets={course.meets} title={course.title}/>
+      <input type="checkbox" 
+        checked={selected.some(m => m.id === course.id)}
+        onChange={isDisabled ? undefined : () => setSelected(course)}
+        className={styles}/>
+    </div>
+  )
+};
+
 const CourseSelector = ({courses, menu, toggleMenu}: CourseSelectorProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -51,15 +72,7 @@ const CourseSelector = ({courses, menu, toggleMenu}: CourseSelectorProps) => {
       </div>
       <div className={`grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-5 px-4 ${modalOpen ? 'pointer-events-none opacity-50' : ''}`}>
         { 
-          courses.map(course => (
-            <div key={course.id} className="relative">
-              <CourseCard term={course.term} number={course.number} meets={course.meets} title={course.title}/>
-              <input type="checkbox" 
-                checked={menu.some(m => m.id === course.id)}
-                onChange={() => toggleMenu(course)}
-                className="absolute bottom-5 right-5 z-10 border-2 border-white rounded-sm checked:bg-blue-500 checked:border-blue-500" />
-            </div>
-          ))
+          courses.map(course => CreateCourseCard(course, menu, toggleMenu))
         }
       </div>
       <CoursePlanModal menu={menu} isOpen={modalOpen} onClose={() => setModalOpen(false)} />

@@ -6,7 +6,7 @@ interface CourseProps {
 };
 
 const CourseCard = ({term, number, meets, title}: CourseProps) => (
-    <div className="flex flex-col items-left h-50 p-4 gap-4 border-2 border-gray-400 rounded-lg">
+    <div className={"flex flex-col items-left h-50 p-4 gap-4 border-2 border-gray-400 rounded-lg"}>
         <div className="font-black text-xl">
             { term } CS { number }
         </div>
