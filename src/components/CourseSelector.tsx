@@ -48,7 +48,7 @@ const CreateCourseCard = (course: Course, selected: Course[], setSelected: (item
 
   return (
     <div key={course.id} className="relative">
-      <CourseCard term={course.term} number={course.number} meets={course.meets} title={course.title}/>
+      <CourseCard id={course.id} term={course.term} number={course.number} meets={course.meets} title={course.title}/>
       <input type="checkbox" 
         checked={selected.some(m => m.id === course.id)}
         onChange={isDisabled ? undefined : () => setSelected(course)}

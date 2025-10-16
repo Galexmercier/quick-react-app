@@ -3,6 +3,8 @@ import { useJsonQuery } from './utilities/fetch';
 import Banner from "./components/Banner";
 import TermPage from "./components/TermPage";
 import { addScheduleTimes } from "./utilities/conflicts";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EditForm from './EditForm';
 
 // A reasonable place for the course plan button on the same line as the term selector but on the right side of the screen.
 
@@ -33,7 +35,12 @@ const App = () => {
   return (
     <div className="bg-[#282c34] min-h-screen flex flex-col text-[calc(10px_+_2vmin)] text-white p-4">
       <Banner title={scheduleReformatted.title}/>
-      <TermPage courses={scheduleReformatted.courses} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TermPage courses={scheduleReformatted.courses} selectedCourses={selectedCourses} setSelectedCourses={setSelectedCourses}/>} />
+          <Route path="/edit" element={ <EditForm /> } />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 };
