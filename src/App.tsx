@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useJsonQuery } from './utilities/fetch';
 import Banner from "./components/Banner";
 import TermPage from "./components/TermPage";
 import { addScheduleTimes } from "./utilities/conflicts";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EditForm from './EditForm';
+import { useData } from './utilities/firebase.js';
 
 // A reasonable place for the course plan button on the same line as the term selector but on the right side of the screen.
 
@@ -22,7 +22,7 @@ interface courseList {
 }
 
 const App = () => {
-  const [json, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+  const [json, isLoading, error] = useData('/');
   const [selectedCourses, setSelectedCourses] = useState<course[]>([]);
 
   if (error) return <h1>Error loading user data: {`${error}`}</h1>;
