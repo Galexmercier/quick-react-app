@@ -1,5 +1,5 @@
 import TermSelector from "./TermSelector";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CourseSelector from "./CourseSelector";
 
 const toggleList = <T extends {id: string}>(x: T, lst: T[]): T[] => (
@@ -23,6 +23,14 @@ interface TermPageProps {
 const TermPage = ({courses, selectedCourses, setSelectedCourses}: TermPageProps) => {
     const [term, setTerm] = useState('Fall');
     
+    useEffect(() => {
+        const hasMismatch = selectedCourses.some(sc => {
+            const current = courses[sc.id];
+            if (!current) return true; // course removed
+            return sc.term !== current.term || sc.number !== current.number || sc.meets !== current.meets || sc.title !== current.title;
+        });
+        if (hasMismatch) setSelectedCourses([]);
+    }, [courses, selectedCourses, setSelectedCourses]);
     
     const termCourses = Object.entries(courses).map(([key, course]) => [
         key,

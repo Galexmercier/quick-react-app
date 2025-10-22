@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from './UseForm';
 import { timeParts } from "./utilities/conflicts";
+import { updateData } from "./utilities/firebase";
 
 const isValidMeets = (meets: string) => {
   const parts = timeParts(meets);
@@ -15,12 +16,26 @@ const validateCourseData = (key: string, val: string) => {
   }
 };
 
-const submit = (values: any) => alert(JSON.stringify(values));
+const submit = async (values: any) => {
+  if (window.confirm(`Change ${values.id} to ${values.title}: ${values.meets}`)) {
+    try {
+      await updateData(`courses/${values.id}/`, values);
+      return true;
+    } catch (error) {
+      alert(error);
+      return false;
+    }
+  }
+  return false;
+};
 
 const EditForm = () => {
   const navigate = useNavigate();
   const { state: course } = useLocation();
-  const [ errors, handleSubmit ] = useForm(validateCourseData, submit);
+  const [ errors, handleSubmit ] = useForm(validateCourseData, async (values: any) => {
+    const ok = await submit(values);
+    if (ok) navigate('/');
+  });
 
   return (
     <form onSubmit={handleSubmit} noValidate className={errors ? 'was-validated' : undefined}>

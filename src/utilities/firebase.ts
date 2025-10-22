@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref } from 'firebase/database';
+import { getDatabase, onValue, ref, update } from 'firebase/database';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -16,6 +16,13 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 const database = getDatabase(firebase);
+
+export const updateData = (path: string, value: any) => {
+  return update(ref(database, path), {
+    "title": value.title,
+    "meets": value.meets
+  });
+};
 
 export const useData = (path: string): [unknown, boolean, Error | undefined] => {
   const [data, setData] = useState();

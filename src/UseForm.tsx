@@ -1,12 +1,12 @@
 import { useState, type FormEvent } from 'react';
 
 type Validator = (key: string, value: string) => string;
-type Submitter = (values: Record<string, string>) => void;
+type Submitter = (values: Record<string, string>) => void | Promise<void>;
 
-export const useForm = (validate: Validator, submit: Submitter): [Record<string, string> | null, (evt: FormEvent<HTMLFormElement>) => void] => {
+export const useForm = (validate: Validator, submit: Submitter): [Record<string, string> | null, (evt: FormEvent<HTMLFormElement>) => Promise<void>] => {
   const [errors, setErrors] = useState<Record<string, string> | null>(null);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const form = evt.currentTarget;
     const formData = new FormData(form);
@@ -24,7 +24,8 @@ export const useForm = (validate: Validator, submit: Submitter): [Record<string,
       setErrors(Object.fromEntries(errors));
     } else {
       setErrors(null);
-      submit(Object.fromEntries(entries as [string, string][]));
+      // await the submitter in case it is async so callers can perform follow-up actions
+      await submit(Object.fromEntries(entries as [string, string][]));
     }
   }
 
