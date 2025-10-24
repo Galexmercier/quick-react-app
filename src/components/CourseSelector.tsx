@@ -39,7 +39,7 @@ interface CourseSelectorProps {
 
 const CreateCourseCard = (course: Course, selected: Course[], setSelected: (item: Course) => void) => {
   const isSelected = selected.some(m => m.id === course.id);
-  const isDisabled = !isSelected && hasConflict(course, selected);
+  const isDisabled = !isSelected && hasConflict(course, selected);  
   let styles = "absolute bottom-5 right-5 z-10 border-2 border-white rounded-sm checked:bg-blue-500 checked:border-blue-500";
 
   if (isDisabled) {
@@ -51,7 +51,7 @@ const CreateCourseCard = (course: Course, selected: Course[], setSelected: (item
       <CourseCard id={course.id} term={course.term} number={course.number} meets={course.meets} title={course.title}/>
       <input type="checkbox" 
         checked={isSelected}
-        onChange={isDisabled ? undefined : () => setSelected(course)}
+        onClick={isDisabled ? undefined : () => setSelected(course)}
         className={styles}/>
     </div>
   )

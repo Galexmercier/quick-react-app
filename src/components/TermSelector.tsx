@@ -1,3 +1,5 @@
+import { signInWithGoogle, signOut, useUserState } from '../utilities/firebase';
+
 const terms = ['Fall', 'Winter', 'Spring'];
 
 interface TermProps {
@@ -16,18 +18,38 @@ const TermButton = ({term, setTerm, checked}: TermProps) => (
   </>
 );
 
+const SignInButton = () => (
+  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+      onClick={() => signInWithGoogle()}>
+    Sign In
+  </button>
+);
+
+const SignOutButton = () => (
+  <button className="btn btn-secondary btn-sm"
+      onClick={() => signOut()}>
+    Sign Out
+  </button>
+);
+
 interface TermSelector {
   term: string;
   setTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const TermSelector = ({term, setTerm}: TermSelector) => (
-  <div className="flex items-center justify-center text-center">
-  { 
-    Object.values(terms)
-      .map(value => <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />)
-  }
+const TermSelector = ({term, setTerm}: TermSelector) => {
+  const [user] = useUserState();
+  return (
+  <div className="btn-toolbar text-center justify-content-between">
+    <div className="flex items-center justify-center">
+    { 
+      Object.values(terms)
+        .map(value => <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />)
+    }
+    </div>
+    { user ? <SignOutButton /> : <SignInButton /> }
   </div>
-);
+  )
+};
 
 export default TermSelector;
