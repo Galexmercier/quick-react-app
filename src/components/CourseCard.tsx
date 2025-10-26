@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useUserState } from "../utilities/firebase";
+import { useProfile } from "../utilities/profile";
 
 interface CourseProps {
     id: string,
@@ -11,7 +11,10 @@ interface CourseProps {
 
 const CourseCard = (CourseCardProps: CourseProps) => {
     const navigate = useNavigate();
-    const [user] = useUserState();
+    
+    const [user, isAdmin, profileLoading, profileError] = useProfile();
+    if (profileError) return <h1>Error loading profile: {`${profileError}`}</h1>;
+    if (profileLoading) return <h1>Loading user profile</h1>;
 
     return (
         <div className={"flex flex-col items-left h-50 p-4 gap-4 border-2 border-gray-400 rounded-lg"}>
@@ -19,7 +22,7 @@ const CourseCard = (CourseCardProps: CourseProps) => {
                 <div className="font-black text-xl">
                     { CourseCardProps.term } CS { CourseCardProps.number }
                 </div>
-                {user ? (<button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded text-sm" 
+                {user && isAdmin ? (<button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded text-sm" 
                             onClick={() => navigate('/edit', { state: CourseCardProps })}>
                             edit
                         </button>
