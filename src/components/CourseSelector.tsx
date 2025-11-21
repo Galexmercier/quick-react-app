@@ -47,7 +47,7 @@ const CreateCourseCard = (course: Course, selected: Course[], setSelected: (item
   }
 
   return (
-    <div key={course.id} className="relative">
+    <div key={course.id} className="relative" data-cy="course">
       <CourseCard id={course.id} term={course.term} number={course.number} meets={course.meets} title={course.title}/>
       <input type="checkbox" 
         checked={isSelected}
